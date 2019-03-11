@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian/stretch
+    steps:
+      - checkout
+      - run:
+          name: Setup CI Environment
+          command: |
+            git submodule update --init
+            ci_scripts/ci_tool.sh --setup_npm
+      
+  deploy:
+    docker:
+      - image: debian/stretch
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Run and publish release
+          command: |
+            ci_scripts/ci_tool.sh --run_release
+            ci_scripts/ci_tool.sh --npm_publish
+      - run:
+          name: Publish Docker
+          command: |
+            ci_scripts/ci_tool.sh --docker_publish
+workflows:
+  version: 2
+
+  test_and_publish:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
