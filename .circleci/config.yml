@@ -29,7 +29,7 @@ jobs:
 workflows:
   version: 2
 
-  test_and_publish:
+  build-deploy:
     jobs:
       - build:
         context: 6rs-circle
