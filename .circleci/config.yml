@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
       docker:
-          - image: debian/stretch
+          - image: circleci/node:stretch
       steps:
           - checkout
           - run:
@@ -13,7 +13,7 @@ jobs:
 
   deploy:
       docker:
-          - image: debian/stretch
+          - image: circleci/node:stretch
       steps:
           - setup_remote_docker
           - attach_workspace:
