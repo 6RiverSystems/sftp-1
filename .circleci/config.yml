@@ -10,6 +10,10 @@ jobs:
               command: |
                     git submodule update --init
                     ci_scripts/ci_tool.sh --setup_npm
+          - persist_to_workspace:
+              root: ./
+              paths:
+                - .
 
   deploy:
       docker:
