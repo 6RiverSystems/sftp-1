@@ -19,6 +19,11 @@ jobs:
           - attach_workspace:
               at: ./
           - run:
+              name: Setup CI Environment
+              command: |
+                    git submodule update --init
+                    ci_scripts/ci_tool.sh --setup_npm
+          - run:
               name: Run release
               command: |
                   ci_scripts/ci_tool.sh --run_release
